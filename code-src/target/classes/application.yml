@@ -3,6 +3,14 @@ server:
 spring:
   application:
     name: pet-service
+  datasource:
+    url: jdbc:mysql://rm-8vbn98pnn0mbemwv72o.mysql.zhangbei.rds.aliyuncs.com:3306/pet_manage?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF8
+    username: quan_zhang
+    password: zhangquan123234
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 10
+    driver-class-name: com.mysql.cj.jdbc.Driver
 eureka:
   client:
     service-url:
