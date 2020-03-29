@@ -33,3 +33,7 @@ proguard/
 /log/
 target/
 /target/
+.gitignore
+code-src/target/generated-sources/
+pet-eureka/target/generated-sources/
+pet-gateway/target/generated-sources/
