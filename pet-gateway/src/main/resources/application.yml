@@ -1,5 +1,5 @@
 server:
-  port: 10010
+  port: 10012
 spring:
   application:
     name: pet-gateway
@@ -13,10 +13,10 @@ eureka:
     ip-address: 127.0.0.1
     instance-id: ${spring.application.name}:${server.port}
 zuul:
-  prefix: /pet # 添加路由前缀
+  prefix: /api # 添加路由前缀
   retryable: true
   routes:
-    item-service: /item/** # 将商品微服务映射到/item/**
+    pet-service: /pet/** # 将宠物微服务映射到/pet/**
   ignored-patterns: /upload/**
   ignored-services:
     - upload-service   # 忽略upload-service服务
