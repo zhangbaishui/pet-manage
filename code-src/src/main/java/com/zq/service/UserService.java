@@ -85,5 +85,18 @@ public class UserService {
         }
     }
 
+    public Boolean namePassIsTrue(String name, String pass) {
+        System.out.println(name+"---"+pass);
+        User user = new User();
+        user.setName(name);
+        user.setPass(pass);
+        List<User> select = userMapper.select(user);
+        if (select.size()>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     ;
 }

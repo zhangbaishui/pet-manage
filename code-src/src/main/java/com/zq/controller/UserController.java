@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Quan.Zhang
@@ -30,9 +32,21 @@ public class UserController {
     /*校验用户名是否存在*/
     @RequestMapping("/nameIsEixt")
     @ResponseBody
-    public Boolean nameIsEixt(@RequestParam(value = "name")String name) {
+    public Map<String,Boolean> nameIsEixt(@RequestParam(value = "name")String name) {
         Boolean res = userService.nameIsEixt(name);
-        return res;
+        HashMap<String, Boolean> stringBooleanHashMap = new HashMap<>();
+        stringBooleanHashMap.put("nameis",res);
+        return stringBooleanHashMap;
+    }
+
+    /*校验账号密码是否错误*/
+    @RequestMapping("/namePassIsTrue")
+    @ResponseBody
+    public Map<String,Boolean> namePassIsTrue(@RequestParam(value = "name")String name, @RequestParam(value = "pass")String pass) {
+        Boolean res = userService.namePassIsTrue(name,pass);
+        HashMap<String, Boolean> stringBooleanHashMap = new HashMap<>();
+        stringBooleanHashMap.put("ist",res);
+        return stringBooleanHashMap;
     }
 
     /*添加用户*/
