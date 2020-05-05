@@ -41,5 +41,7 @@ public class Pet {
     private Date create_time;
     private Date update_time;
     private String desc;
+    private String status;
+    private String hobby;
 
 }
