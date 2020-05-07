@@ -42,10 +42,20 @@ public class UserController {
     /*校验账号密码是否错误*/
     @RequestMapping("/namePassIsTrue")
     @ResponseBody
-    public Map<String,Boolean> namePassIsTrue(@RequestParam(value = "name")String name, @RequestParam(value = "pass")String pass) {
+    public Map<String,Object> namePassIsTrue(@RequestParam(value = "name")String name, @RequestParam(value = "pass")String pass) {
         Boolean res = userService.namePassIsTrue(name,pass);
-        HashMap<String, Boolean> stringBooleanHashMap = new HashMap<>();
+        HashMap<String, Object> stringBooleanHashMap = new HashMap<>();
         stringBooleanHashMap.put("ist",res);
+        if(res = true){
+            /*姓名以及邮箱传递给用户*/
+            User user = new User();
+            user.setName(name);
+            user.setPass(pass);
+            User  user2  =  userService.selectOneUser(user);
+            stringBooleanHashMap.put("name",user2.getName());
+            stringBooleanHashMap.put("mail",user2.getMail());
+        }
+
         return stringBooleanHashMap;
     }
 
@@ -76,5 +86,12 @@ public class UserController {
         User user = userService.selectUserByName(name);
         return user;
     }
+    /*用户注册*/
+    @PostMapping("/register")
+    public Map<String, String> register(User user) {
+        HashMap<String, String> map = userService.registerUser(user);
+        return map;
+    }
+
 
 }

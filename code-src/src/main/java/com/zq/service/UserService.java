@@ -5,11 +5,12 @@ import com.zq.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 //                       .::::.
 //                     .::::::::.
-//                    ::::::::::: 
+//                    :::::::::::
 //                 ..:::::::::::'
 //              '::::::::::::'
 //                .::::::::::
@@ -86,7 +87,6 @@ public class UserService {
     }
 
     public Boolean namePassIsTrue(String name, String pass) {
-        System.out.println(name+"---"+pass);
         User user = new User();
         user.setName(name);
         user.setPass(pass);
@@ -96,6 +96,21 @@ public class UserService {
         }else {
             return false;
         }
+    }
+
+    public HashMap<String, String> registerUser(User user) {
+        int insert = userMapper.insert(user);
+        HashMap<String, String> map = new HashMap<>();
+        if (insert> 0){
+            map.put("message","添加成功");
+        }else {
+            map.put("message","添加失败");
+        }
+        return  map;
+    }
+
+    public User selectOneUser(User user) {
+        return  userMapper.selectOne(user);
     }
 
     ;
