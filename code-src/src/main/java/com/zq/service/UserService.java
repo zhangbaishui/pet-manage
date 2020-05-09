@@ -113,5 +113,10 @@ public class UserService {
         return  userMapper.selectOne(user);
     }
 
+    public HashMap<String, String> callbackPassService(String iphone) {
+        HashMap<String, String> map = new HashMap<>();
+        return map;
+    }
+
     ;
 }

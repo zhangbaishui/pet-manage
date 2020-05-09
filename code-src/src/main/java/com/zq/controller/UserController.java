@@ -88,10 +88,18 @@ public class UserController {
     }
     /*用户注册*/
     @PostMapping("/register")
+    @ResponseBody
     public Map<String, String> register(User user) {
         HashMap<String, String> map = userService.registerUser(user);
         return map;
     }
 
+    /*找回密码*/
+    @PostMapping("/register")
+    @ResponseBody
+    public Map<String, String> callbackPass(@RequestParam(value = "iphone")String iphone) {
+        HashMap<String, String> map = userService.callbackPassService(iphone);
+        return map;
+    }
 
 }
