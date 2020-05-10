@@ -28,7 +28,7 @@ import java.util.Date;
 //                       '.:::::'                    ':'````..
 //
 @Data
-@Table(name = "pet")
+@Table(name = "tb_pet")
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +40,8 @@ public class Pet {
     private Long type;
     private Date create_time;
     private Date update_time;
-    private String desc;
-    private String status;
+    private String pet_desc;
+    private String pet_status;
     private String hobby;
 
 }

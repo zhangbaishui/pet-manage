@@ -28,18 +28,11 @@ import java.util.Date;
 //                       '.:::::'                    ':'````..
 //
 @Data
-@Table(name = "pet_user")
-public class User {
+@Table(name = "pet_type")
+public class PetType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String pass;
-    private String iphone;
-    private Date create_time;
-    private Date update_time;
-    private String mail;
-    private Integer age;
-    private String image;
-    private String gender;
+    private Integer type_id;
+    private String  type_name;
 }

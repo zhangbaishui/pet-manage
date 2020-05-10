@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,8 @@ public class UserController {
         Boolean res = userService.namePassIsTrue(name,pass);
         HashMap<String, Object> stringBooleanHashMap = new HashMap<>();
         stringBooleanHashMap.put("ist",res);
-        if(res = true){
+        System.out.println(res);
+        if(res == true){
             /*姓名以及邮箱传递给用户*/
             User user = new User();
             user.setName(name);
@@ -75,7 +77,7 @@ public class UserController {
 
     /*删除用户*/
     @PostMapping("/delete")
-    public boolean deleteUser(User user) {
+    public boolean deleteUser( User user) {
         Boolean result = userService.deleteUser(user);
         return result;
     }
@@ -89,17 +91,61 @@ public class UserController {
     /*用户注册*/
     @PostMapping("/register")
     @ResponseBody
-    public Map<String, String> register(User user) {
+    public Map<String, String> register(@RequestParam(value = "name")String name,
+                                        @RequestParam(value = "pass")String pass,
+                                        @RequestParam(value = "gender")String gender,
+                                        @RequestParam(value = "iphone")String iphone,
+                                        @RequestParam(value = "mail")String mail,
+                                        @RequestParam(value = "age")String age,
+                                        @RequestParam(value = "image")String image) {
+        User user = new User();
+        user.setName(name);
+        user.setPass(pass);
+        user.setGender(gender);
+        user.setIphone(iphone);
+        user.setMail(mail);
+        user.setAge(Integer.parseInt(age));
+        user.setImage(image);
         HashMap<String, String> map = userService.registerUser(user);
         return map;
     }
 
     /*找回密码*/
-    @PostMapping("/register")
+    @PostMapping("/callback")
     @ResponseBody
     public Map<String, String> callbackPass(@RequestParam(value = "iphone")String iphone) {
         HashMap<String, String> map = userService.callbackPassService(iphone);
         return map;
     }
 
+    /*修改名字*/
+    @PostMapping("/uupdateName")
+    @ResponseBody
+    public Map<String, String> uupdateName(@RequestParam(value = "name")String name,@RequestParam(value = "id")String id) {
+        HashMap<String, String> map = userService.uupdateName(id,name);
+        return map;
+    }
+
+    /*修改邮箱*/
+    @PostMapping("/updateMali")
+    @ResponseBody
+    public Map<String, String> updateMali(@RequestParam(value = "mail")String mail,@RequestParam(value = "id")String id) {
+        HashMap<String, String> map = userService.updateMali(id,mail);
+        return map;
+    }
+
+    /*通过用户名和邮箱获取信息*/
+    @PostMapping("/getUser")
+    @ResponseBody
+    public Map<String, Object> getUser(@RequestParam(value = "mail")String mail,@RequestParam(value = "name")String name) {
+        HashMap<String, Object> map = userService.getUser(name,mail);
+        return map;
+    }
+    /*通过用户名和邮箱获取信息*/
+    @PostMapping("/getId")
+    @ResponseBody
+    public Map<String, Object> getId(@RequestParam(value = "mail")String mail,@RequestParam(value = "name")String name) {
+        HashMap<String, Object> map = userService.getId(name,mail);
+        return map;
+    }
 }

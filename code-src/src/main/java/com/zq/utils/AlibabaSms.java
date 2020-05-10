@@ -31,11 +31,15 @@ import com.aliyuncs.profile.DefaultProfile;
 //
 /*Quan.Zhang:  阿里短信服务*/
 public class AlibabaSms {
-    public static void main(String[] args) {
+    public  void   sms(String iphone,String pass) {
 
         //切换accessKeyId   LTAI4Fe95ZULzQFxdPi62sKn	;   accessSecret wcfDs9JvM0KpCzjNnmvQnA4ODK95gf;
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4Fe95ZULzQFxdPi62sKn", "wcfDs9JvM0KpCzjNnmvQnA4ODK95gf");
         IAcsClient client = new DefaultAcsClient(profile);
+
+
+        String  code  =  "{'code':'"+pass+"'}";
+
 
         CommonRequest request = new CommonRequest();
         request.setMethod(MethodType.POST);
@@ -43,10 +47,10 @@ public class AlibabaSms {
         request.setVersion("2017-05-25");
         request.setAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
-        request.putQueryParameter("PhoneNumbers", "13866393137");
+        request.putQueryParameter("PhoneNumbers", iphone);
         request.putQueryParameter("SignName", "亲爸爸系列");
         request.putQueryParameter("TemplateCode", "SMS_189761455");
-        request.putQueryParameter("TemplateParam", "{'code':'eeqeq'}");
+        request.putQueryParameter("TemplateParam", code);
         try {
             CommonResponse response = client.getCommonResponse(request);
             System.out.println(response.getData());
