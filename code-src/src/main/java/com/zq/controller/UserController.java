@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,13 +95,14 @@ public class UserController {
     /*用户注册*/
     @PostMapping("/register")
     @ResponseBody
-    public Map<String, String> register(@RequestParam(value = "name")String name,
+    public Map<String, Object> register(HttpServletRequest request ,
+                                        @RequestParam(value = "name")String name,
                                         @RequestParam(value = "pass")String pass,
                                         @RequestParam(value = "gender")String gender,
                                         @RequestParam(value = "iphone")String iphone,
                                         @RequestParam(value = "mail")String mail,
                                         @RequestParam(value = "age")String age,
-                                        @RequestParam(value = "image")String image) {
+                                        @RequestParam(value = "image") MultipartFile image) throws IOException {
         User user = new User();
         user.setName(name);
         user.setPass(pass);
@@ -105,8 +110,16 @@ public class UserController {
         user.setIphone(iphone);
         user.setMail(mail);
         user.setAge(Integer.parseInt(age));
-        user.setImage(image);
-        HashMap<String, String> map = userService.registerUser(user);
+
+        Date t = new Date();
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        /*文件上传OSS  upload 第三个参数为oss文件夹名称  */
+        HashMap<String,Object> br = userService.upload(request,image,dataFormat.toString());
+
+
+//        user.setImage(image);
+//        HashMap<String, String> map = userService.registerUser(user);
+        HashMap<String, Object> map = userService.registerUser(user,br);
         return map;
     }
 

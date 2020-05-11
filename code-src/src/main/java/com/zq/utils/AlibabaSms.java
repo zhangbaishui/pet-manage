@@ -31,10 +31,12 @@ import com.aliyuncs.profile.DefaultProfile;
 //
 /*Quan.Zhang:  阿里短信服务*/
 public class AlibabaSms {
+    private  String  accessKeyId = "LTAI4Fe95ZULzQFxdPi62sKn";
+    private  String  accessSecret = "wcfDs9JvM0KpCzjNnmvQnA4ODK95gf";
     public  void   sms(String iphone,String pass) {
 
         //切换accessKeyId   LTAI4Fe95ZULzQFxdPi62sKn	;   accessSecret wcfDs9JvM0KpCzjNnmvQnA4ODK95gf;
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4Fe95ZULzQFxdPi62sKn", "wcfDs9JvM0KpCzjNnmvQnA4ODK95gf");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessSecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
 

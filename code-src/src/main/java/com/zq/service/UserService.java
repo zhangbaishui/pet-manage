@@ -4,10 +4,14 @@ import com.zq.mapper.PetMapper;
 import com.zq.mapper.UserMapper;
 import com.zq.pojo.Pet;
 import com.zq.pojo.User;
+import com.zq.utils.AlibabaOssUtil;
 import com.zq.utils.AlibabaSms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -104,10 +108,10 @@ public class UserService {
         }
     }
 
-    public HashMap<String, String> registerUser(User user) {
+    public HashMap<String, Object> registerUser(User user, HashMap<String, Object> map) {
         user.setCreate_time(new Date());
+        user.setImage(map.get("url").toString());
         int insert = userMapper.insert(user);
-        HashMap<String, String> map = new HashMap<>();
         if (insert> 0){
             map.put("message","添加成功");
         }else {
@@ -173,6 +177,7 @@ public class UserService {
         map.put("name",user1.getName());
         map.put("mail",user1.getMail());
         map.put("gender",user1.getGender());
+        map.put("image",user1.getImage());
         map.put("createTime",user1.getCreate_time().toString());
         map.put("pets", pets);
         return map;
@@ -191,6 +196,32 @@ public class UserService {
         map.put("id",user1.getId().toString());
         map.put("pets", pets);
         return map;
+    }
+
+    public HashMap<String, Object> upload(HttpServletRequest request, MultipartFile file, String name) throws IOException {
+        HashMap<String, Object>  map = new HashMap<>();
+
+        //上传图片
+        String url = "";
+        //判断file是否为null，前端是否传过来了 图片
+        if (file == null){
+            map.put("uploadMessage","图片为空");
+            map.put("url",null);
+            return map;
+        }
+        try {
+            //三个参数： file：文件 , request : 请求 , tableName ： 目录名称，没有目录可以为"" or null
+            AlibabaOssUtil.upload(request , file , name);
+            url = AlibabaOssUtil.getURL(file.getOriginalFilename() , name);
+            map.put("uploadMessage","上传成功");
+            map.put("url",url);
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("uploadMessage","上传异常，请重新上传图片");
+            map.put("url",null);
+            return map;
+        }
     }
 
 
