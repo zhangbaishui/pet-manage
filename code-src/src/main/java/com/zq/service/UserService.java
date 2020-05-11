@@ -108,9 +108,9 @@ public class UserService {
         }
     }
 
-    public HashMap<String, Object> registerUser(User user, HashMap<String, Object> map) {
+    public HashMap<String, Object> registerUser(User user) {
         user.setCreate_time(new Date());
-        user.setImage(map.get("url").toString());
+        HashMap<String, Object> map = new HashMap<>();
         int insert = userMapper.insert(user);
         if (insert> 0){
             map.put("message","添加成功");

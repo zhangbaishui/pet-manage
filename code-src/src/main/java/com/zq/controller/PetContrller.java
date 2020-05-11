@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //                       .::::.
@@ -93,7 +94,7 @@ public class PetContrller {
                        @RequestParam(value = "type") String type,
                        @RequestParam(value = "status") String status,
                        @RequestParam(value = "hobby") String hobby,
-//                       @RequestParam(value = "image")String image ,
+                       @RequestParam(value = "image") List<String> image ,
                        @RequestParam(value = "desc") String desc) {
         Pet pet = new Pet();
         pet.setUer_id(Long.parseLong(userId));
@@ -103,6 +104,7 @@ public class PetContrller {
         pet.setPet_status(status);
         pet.setHobby(hobby);
         pet.setPet_desc(desc);
+        pet.setImage(image.toString());
         pet.setUpdate_time(new Date());
         petService.add(pet);
 
