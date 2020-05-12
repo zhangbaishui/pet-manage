@@ -68,7 +68,7 @@ public class PetContrller {
                        @RequestParam(value = "type") String type,
                        @RequestParam(value = "status") String status,
                        @RequestParam(value = "hobby") String hobby,
-//                       @RequestParam(value = "image")String image ,
+                       @RequestParam(value = "image") List<String> image ,
                        @RequestParam(value = "desc") String desc) {
         Pet pet = new Pet();
         pet.setId(Long.parseLong(id));
@@ -76,6 +76,7 @@ public class PetContrller {
         pet.setPet_age(Long.parseLong(petAge));
         pet.setType(Long.parseLong(type));
         pet.setPet_status(status);
+        pet.setImage(image.toString());
         pet.setHobby(hobby);
         pet.setPet_desc(desc);
         pet.setUpdate_time(new Date());
